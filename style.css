@@ -1,0 +1,182 @@
+/* Import font dasar */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+/* Reset dasar dan pengaturan body */
+html, body {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* --- Pengaturan Layar (Login & Game) --- */
+.screen {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    display: none;
+    flex-direction: column;
+    transition: opacity 0.5s ease;
+}
+.screen.active {
+    display: flex;
+}
+
+/* --- Layar Login --- */
+#login-screen {
+    justify-content: center;
+    align-items: center;
+    background-image: url('images/latar.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+.login-box {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    text-align: center;
+    width: 90%;
+    max-width: 400px;
+}
+#player-name-input, #start-game-button {
+    width: 100%;
+    padding: 12px;
+    font-size: 1em;
+    border-radius: 8px;
+    box-sizing: border-box;
+}
+#player-name-input { border: 2px solid #ccc; margin: 15px 0; }
+#start-game-button { border: none; background-color: #007bff; color: white; cursor: pointer; transition: background-color 0.3s; }
+#start-game-button:hover { background-color: #0056b3; }
+
+/* Papan Skor */
+#leaderboard {
+    width: 100%;
+    margin-bottom: 25px;
+    background: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    padding: 10px 15px;
+    box-sizing: border-box;
+}
+#leaderboard h3 { margin: 0 0 10px 0; font-size: 1.1em; color: #495057; text-align: center; }
+#leaderboard-list { list-style: none; padding: 0; margin: 0; }
+#leaderboard-list li { display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px solid #e9ecef; font-size: 0.95em; }
+#leaderboard-list li:last-child { border-bottom: none; }
+#leaderboard-list .player-name { font-weight: 600; }
+#leaderboard-list .player-time { font-family: monospace; color: #007bff; }
+
+
+/* --- Layar Permainan --- */
+#game-screen {
+    justify-content: flex-start;
+    align-items: center;
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    color: white;
+}
+header {
+    width: 100%;
+    padding: 10px 0;
+    text-align: center;
+    flex-shrink: 0;
+}
+header h1 { margin: 0; color: #ffffff; font-size: 1.8em; text-shadow: 1px 1px 3px rgba(0,0,0,0.4); }
+.game-info { display: flex; justify-content: center; align-items: center; gap: 20px; margin-top: 5px; font-size: 1em; color: #f0f0f0; font-weight: 600; }
+#reset-button { padding: 8px 16px; font-size: 0.9em; border: none; background-color: #ff4d4d; color: white; border-radius: 8px; cursor: pointer; }
+
+.game-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+    padding: 0 20px;
+    box-sizing: border-box;
+    flex-grow: 1;
+    min-height: 0;
+}
+
+/* Papan Puzzle Tengah */
+#puzzle-board {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    width: clamp(300px, 75vh, 550px); 
+    max-height: 75vh;
+    aspect-ratio: 1 / 1;
+    border: 3px solid #a5cc82;
+    background-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 5px 25px rgba(0,0,0,0.3);
+}
+.puzzle-slot { border: 1px dashed rgba(255,255,255,0.4); box-sizing: border-box; }
+.puzzle-slot.correct { border: 1px solid rgba(165, 204, 130, 0.7); }
+.puzzle-slot:hover { background-color: rgba(165, 204, 130, 0.2); }
+
+/* Kontainer Potongan Kiri & Kanan */
+.pieces-container {
+    flex: 1;
+    max-width: 275px;
+    height: 100%;
+    max-height: calc(clamp(300px, 75vh, 550px) + 6px);
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(4, auto);
+    gap: 5px;
+    padding: 10px;
+    background-color: rgba(0,0,0,0.2);
+    border-radius: 10px;
+    align-content: start;
+    overflow-y: hidden;
+}
+
+.puzzle-piece { width: 100%; cursor: pointer; border-radius: 5px; transition: transform 0.2s, box-shadow 0.2s; display: block; }
+.puzzle-piece:hover { transform: scale(1.05); }
+.piece-selected { box-shadow: 0 0 15px 3px #a5cc82; transform: scale(1.1); z-index: 10; }
+.puzzle-slot .puzzle-piece { width: 100%; height: 100%; object-fit: cover; }
+.puzzle-piece.pre-placed { opacity: 0.7; cursor: default; }
+
+/* Modal Kemenangan */
+.modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.6); justify-content: center; align-items: center; z-index: 100; backdrop-filter: blur(5px); }
+.modal-content { background: white; padding: 30px; border-radius: 15px; text-align: center; box-shadow: 0 5px 20px rgba(0,0,0,0.3); color: #333; }
+#finish-button { padding: 12px 25px; font-size: 1.1em; border: none; background-color: #28a745; color: white; border-radius: 8px; cursor: pointer; margin-top: 15px; }
+#finish-button:hover { background-color: #218838; }
+
+/* Gaya untuk Tombol Bantuan */
+#hint-button {
+    padding: 8px 16px;
+    font-size: 0.9em;
+    border: none;
+    background-color: #ffc107;
+    color: #333;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s, opacity 0.3s;
+}
+#hint-button:hover {
+    background-color: #e0a800;
+}
+#hint-button:disabled {
+    background-color: #6c757d;
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* Efek Berkedip untuk Bantuan */
+.hint-active {
+    animation: hint-flash 0.5s 3;
+}
+@keyframes hint-flash {
+    0%, 100% {
+        box-shadow: 0 0 15px 5px rgba(255, 193, 7, 0.8);
+        transform: scale(1.05);
+    }
+    50% {
+        box-shadow: none;
+        transform: scale(1);
+    }
+}

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Puzzle Budaya Saijaan</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div id="login-screen" class="screen active">
+        <div class="login-box">
+            <h1>Selamat Datang!</h1>
+            
+            <div id="leaderboard">
+                <h3>🏆 Papan Skor Teratas 🏆</h3>
+                <ol id="leaderboard-list">
+                    <li>Memuat data...</li>
+                </ol>
+            </div>
+            
+            <p>Masukkan namamu untuk memulai permainan.</p>
+            <input type="text" id="player-name-input" placeholder="Ketik nama di sini..." autocomplete="off">
+            <button id="start-game-button">Mulai Main</button>
+        </div>
+    </div>
+
+    <div id="game-screen" class="screen">
+        <header>
+            <h1>Puzzle Akrab Saijaan</h1>
+            <div class="game-info">
+                <p>Pemain: <strong id="player-name-display"></strong></p>
+                <p>Waktu: <span id="timer">00:00</span></p>
+                <button id="hint-button">💡 Bantuan (1)</button> 
+                <button id="reset-button">Ulangi</button>
+            </div>
+        </header>
+        
+        <main class="game-container">
+            <div id="pieces-container-left" class="pieces-container"></div>
+            <div id="puzzle-board"></div>
+            <div id="pieces-container-right" class="pieces-container"></div>
+        </main>
+    </div>
+
+    <div id="win-modal" class="modal-overlay">
+        <div class="modal-content">
+            <h2>Luar Biasa, <span id="winner-name"></span>!</h2>
+            <p>Anda menyelesaikan puzzle dalam waktu <strong id="final-time">00:00</strong>!</p>
+            <button id="finish-button">Selesai</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
